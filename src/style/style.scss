@@ -1,0 +1,270 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+#layout{  
+  position: fixed;
+  top:0px;
+  left:0px
+}
+#body{
+  font-size:12px;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  /* 左侧菜单栏样式 */
+  min-height: 400px;
+  background-color:#2f4050;
+  color:rgb(189, 184, 184)
+}
+.clearfix{
+  /* 顶部title样式 */
+  padding-left:20px;
+  color: white;
+  font-size:20px;
+}
+.userImg{
+  /* 头像样式 */
+  text-align:center;
+  padding-top:40px;
+  padding-bottom:20px;
+  background-color: #263949;;
+  width:200px;
+}
+
+.font{
+  margin-left:auto;
+  margin-top:6px;
+  margin-left:40px;
+  color:#747575;
+  text-align:justify
+}
+// 总览部分
+.smallNum{
+  font-weight: 100;
+  font-size:20px
+}
+.cardTopBorder{
+  border-top:5px solid #e7eaec;
+}
+.rightBgText{
+  color:#fff;
+  font-weight: 600;
+  font-size:10px;
+  background-color:#23c6c8;
+  padding:2px 5px 2px 5px;
+  border-radius:20%;
+}
+.msgBox{
+  padding:20px 0px 5px 120px
+}
+.num{
+  font-size:30px;
+  font-weight: 200;
+  color:#676a71;
+}
+.numAfter{
+  font-size:20px;
+  font-weight: 200;
+  color:#676a71;
+}
+// 地图部分
+.bm-view {
+  /** 地图大小样式 */
+  width: 100%;
+  height: 300px;
+}
+.map {
+  width: 100%;
+  height: 800px;
+}
+.mapPopup{
+  position: absolute;
+  top:20px;
+  left:30%;
+}
+.addShou{
+  cursor:pointer;
+}
+.inputLabe{
+  margin-left:auto;
+  margin-top:6px;
+  margin-left:0px;
+  color:#747575;
+  text-align:right
+}
+.rowMargin{
+  margin-top:10px
+}
+
+.el-range-editor--small.el-input__inner{
+  height: 36px ;
+}
+.el-range-editor--small .el-range-separator{
+  line-height:26px;
+}
+.el-input__inner{
+  border-color: #c2c2c2;
+  border-radius: 2px;
+  padding: 17px 20px;
+  font-size: 12px;
+}
+.el-button+.el-button{
+  margin-left: 0
+}
+//表格
+.el-table{
+  color:#808080;
+}
+.el-table td, .el-table th.is-leaf{
+  border-bottom: 0
+}
+.el-table--small td, .el-table--small th{
+  padding: 8px 0 8px 20px
+}
+.el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell{
+  padding-left: 0
+}
+.el-table--mini, .el-table--small, .el-table__expand-icon{
+  font-size: 14px
+}
+.el-table thead{
+  color:#000
+}
+
+.addStyle{
+  width:260px;
+}
+.inputStyle{
+  width: 205px;
+}
+.colStyle{
+  width: 240px;
+}
+
+.main{
+  margin: 30px 0 0 20px;
+  border-bottom: 0;
+}
+
+.listTitle{
+  display: inline-block;
+  margin-top: 10px;
+  font-size:18px;
+  padding:0 0 0 20px
+}
+
+.query{
+  display: inline-block;
+  font-size: 14px;
+  width: 80px;
+  text-align: center;
+  height: 36px;
+  border-radius: 3px;
+}
+
+.add{
+  display: inline-block;
+  font-size: 14px;
+  height: 36px;
+  border-radius: 3px;
+}
+
+.search{
+  margin:30px 0 30px 0;
+  padding-left: 20px
+}
+
+.loading{
+  font-size:40px;
+  position:absolute;
+  z-index:1000;
+  left:45%;
+  top:45%
+}
+
+.el-form-item__error{
+width:350px;
+}
+.el-form-item--small .el-form-item__label{
+  line-height: 36px;
+}
+
+.paTotal{
+  position:relative;
+  width:80px;
+  left:20px;
+  top:33px;
+  width: 200px;
+  color:#808080;
+  font-size:14px;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active,.el-pagination.is-background .el-pager li{
+  margin-top:6px;
+}
+
+.el-pagination button, .el-pagination span:not([class*=suffix]){
+  height:43px;
+  line-height: 40px;
+}
+.content{
+  color:white;
+  position:fixed;
+  right:8.5%;
+  top:25%;
+  width:280px;
+  z-index: 999;
+  background-color:rgb(92, 175, 230);
+  height:170px;
+  border-radius:5px;
+}
+.content p{
+  line-height: 5px;
+  margin-bottom: 0
+}
+.summary{
+  position: absolute;
+  left: 30%;
+  top:-10px;
+}
+.el-tabs__item.is-active{
+  border-bottom-color:transparent;
+  background-color: rgb(92, 175, 230) !important;
+  color: white;
+}
+.el-tabs__active-bar{
+background: transparent
+}
+.el-tabs__item{
+  width: 120px;
+  text-align: center;
+}
+.el-badge__content.is-fixed.is-dot{
+  top:15px;
+}
+.title{
+  font-size: 20px;
+}
+
+
+.abc > .el-tabs__header >.el-tabs__nav-wrap{
+  width: 160px !important;
+  right: -75%;
+}
+.abc > .el-tabs__header >.el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item{
+  width: 70px;
+}
+.abc > .el-tabs__header >.el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active{
+  background: transparent !important;
+  color: rgb(92, 175, 230) !important;
+}
+.abc > .el-tabs__header >.el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__active-bar{
+  background: transparent !important;
+}
+
+.el-tabs--top .el-tabs__item.is-top:last-child{
+  padding-right: 20px
+}
+.el-form-item--small.el-form-item{
+  margin-bottom: 22px !important
+}

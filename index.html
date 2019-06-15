@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="static/css/el-index.css">  
+    <link rel="stylesheet" href="static/icon/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/2.jpg">
+    <!-- 引入el组件 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 原生高德地图 -->
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=77856287e0245f953790e60bdcfac9a6"></script> 
+    <!--引入UI组件库（1.0版本） -->
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+    <title>充电桩运营管理平台</title>
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <router-view></router-view>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+  <script src="static/js/echarts.min.js" defer async="async"></script>
+  <script src="static/js/vue-baidu-map.js" defer async="async"></script>
+
+  <script src="static/js/vue.js" defer async="async"></script>
+  <!-- import JavaScript -->
+  <script src="static/js/el-index.js" defer async="async"></script>
+  <script>
+  function goSiteDetail(index){
+    let Url = window.location.href
+    let urlArr = Url.split('charging')
+    // window.location.href='http://localhost:8087/#/addDialog?id='+index
+    window.location.href=urlArr[0]+'addDialog?id='+index
+  }
+  function mapsearch(){
+      var searchVal = $("#mymap_search").val();
+      placeSearch.search(searchVal);
+  }
+  </script>
+</html>
+
+

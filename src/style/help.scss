@@ -1,0 +1,26 @@
+
+.TabStyle > .el-tabs__header >.el-tabs__nav-wrap::after{
+    display: none;
+}
+.TabStyle > .el-tabs__header >.el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item{
+    font-size: 18px;
+    width: 100px;
+}
+.TabStyle > .el-tabs__header >.el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active{
+    background: transparent !important;
+    color: black;
+    border-bottom: 2px solid #409EFF;
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.645,.045,.355,1);
+    transition: -webkit-transform .3s cubic-bezier(.645,.045,.355,1);
+    transition: transform .3s cubic-bezier(.645,.045,.355,1);
+    transition: transform .3s cubic-bezier(.645,.045,.355,1),-webkit-transform .3s cubic-bezier(.645,.045,.355,1);
+    transition: width 2s;
+}
+/* ===============总览帮助=================== */
+.ov_Login{
+    color: black;
+    font-size: 18px
+}
+#helpOverView > div{
+    margin-top: 40px;
+}
