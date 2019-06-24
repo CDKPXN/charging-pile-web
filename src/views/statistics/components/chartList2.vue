@@ -22,7 +22,9 @@
     </el-tabs>
 </template>
 <script>
-  var xData = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+ var xData = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+ let date=new Date();
+let month=date.getMonth()+1;
 // echarts 矢量图 引入
 import echarts from '../../../../static/js/echarts.min.js'
 export default {
@@ -31,7 +33,8 @@ export default {
         return{
             activeName: 'second',
             aid:'',
-            sid:''
+            sid:'',
+            isquery:true
         }
     },
     mounted:function(){    
@@ -59,7 +62,7 @@ export default {
                             }
                         }
                         let legData = ['订单收入']
-                        this.getesPrice(xData,data[0],'orderincome',legData)
+                        this.getesPrice(xData,data[0].slice(0,month),'orderincome',legData)
                     }
                 })
          },
@@ -74,7 +77,7 @@ export default {
                     if(res.data.code == 200){
                         let data = res.data.data
                         let legData = ['电量输出']
-                        this.getesPrice(xData,data,'powerOutPut',legData)
+                        this.getesPrice(xData,data.slice(0,month),'powerOutPut',legData)
                     }
                 })
          },
@@ -89,7 +92,7 @@ export default {
                     if(res.data.code == 200){
                         let data = res.data.data
                         let legData = ['充电时长']
-                        this.getesPrice(xData,data,'totalTime',legData)
+                        this.getesPrice(xData,data.slice(0,month),'totalTime',legData)
                     }
                 })
          },
@@ -104,7 +107,7 @@ export default {
                     if(res.data.code == 200){
                         let data = res.data.data
                             let legData = ['充电订单数']
-                        this.getesPrice(xData,data,'totalOrder',legData)
+                        this.getesPrice(xData,data.slice(0,month),'totalOrder',legData)
                     }
                 })
          },
@@ -119,12 +122,12 @@ export default {
                     if(res.data.code == 200){
                         let data = res.data.data
                         let legData = ['故障数']
-                        this.getesPrice(xData,data,'totalFault',legData)
+                        this.getesPrice(xData,data.slice(0,month),'totalFault',legData)
                     }
                 }) 
          },
-        getaidsid(aid,sid){
-        
+        getaidsid(aid,sid,isquery){
+        this.isquery=isquery;
          this.aid=aid;
          this.sid=sid;
         },
@@ -132,16 +135,24 @@ export default {
         handleClick(tab, event) {
             let vm = this       
              if(vm.activeName == 'third'){
-               this.powerOutPut();        
+                 if(this.isquery){
+                   this.powerOutPut();
+                 }                 
             }
             else if(vm.activeName == 'fourth'){
-               this.totalTime();
+                if(this.isquery){
+                   this.totalTime();
+                }    
             }
             else if(vm.activeName == 'fifth'){
+                 if(this.isquery){
                this.totalOrder();
+                 }
             }
             else if(vm.activeName == 'sixth'){
+                 if(this.isquery){
                 this.totalFault(); 
+                }
             }
         },
         //注册用户/电量输出/总时长/订单数/故障数ECharts表

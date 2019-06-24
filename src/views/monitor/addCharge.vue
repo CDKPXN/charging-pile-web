@@ -106,7 +106,30 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <!-- 上传图片 -->
+             <el-row>
+              <el-col :span="24" style="margin-left:63px">
+               <div >
+                <span class="demonstration">站点图片</span>
+             <el-image :src="src" class="apppicture" ></el-image>
+             <!-- 上传组件 -->
+             <el-upload
+                style="margin-top:20px"
+                :action=" action"
+                :headers='token'
+                :show-file-list="false"
+                :limit="1"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"   
+                >                        
+                <el-button size="small" type="primary">点击上传</el-button>                
+               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2MB</div>
+              </el-upload>
+                    
+          </div>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top:20px;">
               <el-col :span="12" style="margin-left:63px">
                 <el-button type="primary" @click="addSite" style="margin-right:20px;">确认</el-button>
                 <el-button type="infor" @click="Goback">返回</el-button>
@@ -126,6 +149,7 @@
 <script>
 // import {api_addSite} from '../api/index.js'
 // import $ from 'jquery'
+import url from '../../config/url.js'
 export default {
   data() {
     return {
@@ -137,7 +161,7 @@ export default {
         linkmanPhone: "",
         eprice: "",
         sprice: "",
-        parkingFee: ""
+        parkingFee: "",
       },
       playFor: "0", //支付方式
       playForArr: [{ value: "0", label: "银联充值" }],
@@ -147,13 +171,34 @@ export default {
         province: "",
         city: "",
         area: ""
-      }
+      },
+      src:url.localSrc+'/no_img.jpg',
+      action:url.localSrc+'/file/record/upload',
+      token:{token:sessionStorage.getItem('token')},
+      fid:''
     };
   },
   mounted: function() {
     this.init();
   },
   methods: {
+      //上传成功变图片
+      handleAvatarSuccess(res, file) {  
+        this.fid=res.data.id;     
+        this.src = URL.createObjectURL(file.raw);           
+      },
+      //判断格式时候正确
+       beforeAvatarUpload(file){
+         const isJPG = file.type === 'image/jpeg'||'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG和PNG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+       },
     //初始化地图
     init: function() {
       var map = new AMap.Map("container", {
@@ -299,7 +344,8 @@ export default {
             name: vm.form.name,
             linkmanPhone: vm.form.linkmanPhone,
             longitude: $("input[name=lng]").val(),
-            latitude: $("input[name=lat]").val()
+            latitude: $("input[name=lat]").val(),
+            fid:vm.fid
           };
           vm.$ajax({
             method: "post",
@@ -338,6 +384,7 @@ export default {
               name: vm.form.name,
               longitude: $("input[name=lng]").val(),
               latitude: $("input[name=lat]").val(),
+              fid:vm.fid,
               // eprice:(vm.form.eprice) * 100,
               // sprice:(vm.form.sprice) * 100,
               parkingFee: vm.form.parkingFee * 100,
@@ -371,6 +418,7 @@ export default {
   },
   created() {
     let siteid = this.$route.query.sitedate;
+   
     if (siteid == 0) {
       this.form = this.form;
 
@@ -384,6 +432,7 @@ export default {
       }).then(res => {
         if (res.data.code == 200) {
           this.form = res.data.data.list[0];
+          this.fid=res.data.data.list[0].fid;
           this.form.eprice = (this.form.eprice / 100).toFixed(2);
           this.form.sprice = (this.form.sprice / 100).toFixed(2);
           this.form.parkingFee = (this.form.parkingFee / 100).toFixed(2);
@@ -398,6 +447,20 @@ export default {
             $("input[name=address]").val(res.data.data.list[i].addr);
             $("input[name=lng]").val(res.data.data.list[i].longitude);
             $("input[name=lat]").val(res.data.data.list[i].latitude);
+          }
+          //判断当前页面是不是修改页面
+          if(this.$route.query.titlemsg!==0){
+              if(this.fid!==null){
+              this.$ajax({
+               method:'get',
+               url:'file/record/'+this.fid,
+               headers: { token: sessionStorage.getItem("token") }
+                }).then(res=>{
+              if(res.data.code==200){
+               this.src=url.localSrc+'/'+res.data.data.rname;    
+            }
+            })
+           }
           }
         }
       });
@@ -421,5 +484,14 @@ export default {
 .form-control {
   height: 36px;
   line-height: 36px；;
+}
+.apppicture{
+    width: 300px;
+    height: 200px;
+    border: 1px solid black;
+}
+.apppicture>img{
+    width: 100%;
+    height: 100%;
 }
 </style>

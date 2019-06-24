@@ -9,7 +9,7 @@
         <el-input v-model="user" placeholder="用户名" style="font-size:14px;width:260px;margin:10px 0"></el-input>
         <br>
         <br>
-        <el-input v-model="passWord" placeholder="密码" style="width:260px;"></el-input>
+        <el-input v-model="passWord" placeholder="密码" style="width:260px;"  show-password ></el-input>
       </el-form>
       <br>
       <el-button

@@ -383,7 +383,7 @@ import ChartList2 from './components/chartList2.vue'
         },
         //点击查询事件把调用子组件的方法传值
         lookfor(){
-            this.$refs.chidren2.getaidsid(this.aid,this.sid);
+            this.$refs.chidren2.getaidsid(this.aid,this.sid,false);
             //点击的时候调用子组件的方法重新请求数据
             this.$refs.chidren2.orderincome();
             this.$refs.chidren2.powerOutPut();

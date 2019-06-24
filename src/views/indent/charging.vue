@@ -182,7 +182,7 @@ export default {
                 if(res.data.code==200){
                     console.log(res.data.data)
                     vm.data = res.data.data.list.slice(0,10)
-                    console.log("充电订单",vm.data)
+                    // console.log("充电订单",vm.data)
                     vm.data.map(item =>{
                         item.cost = (parseFloat((item.cost) / 100)).toFixed(2)
                         item.cprice = (parseFloat((item.cprice) / 100)).toFixed(2)
@@ -221,7 +221,9 @@ export default {
                     phone:vm.phone,
                     sitename:vm.siteName,
                     beginTime:beginTime,
-                    endTime:endTime
+                    endTime:endTime,
+                    sid:vm.zdid,
+                    aid:vm.userid,
                 }
             })
             .then(res=>{
@@ -258,7 +260,9 @@ export default {
                     phone:vm.phone,
                     sitename:vm.siteName,
                     beginTime:beginTime,
-                    endTime:endTime
+                    endTime:endTime,
+                    sid:vm.zdid,
+                    aid:vm.userid,
                 }
             })
             .then(res=>{

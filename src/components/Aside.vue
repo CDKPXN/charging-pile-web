@@ -36,7 +36,7 @@
         <span slot="title">帮助</span>
     </el-menu-item>
     <!-- 设置 -->
-     <el-submenu  index='7'>  
+     <el-submenu  index='7' v-show="isAdmin">  
           <template slot="title" >
             <i class="fa fa-question-circle fa-lg" style="width:26px"></i>&nbsp; 
             <span slot="title">设置</span>

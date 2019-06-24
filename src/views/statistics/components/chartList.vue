@@ -23,7 +23,10 @@
 </template>
 <script>
 // echarts 矢量图 引入
-import echarts from '../../../../static/js/echarts.min.js'
+import echarts from '../../../../static/js/echarts.min.js';
+let date=new Date();
+let month=date.getMonth()+1;
+console.log('月份',month)
 export default {
     name:'ChartList',
     data(){
@@ -43,7 +46,7 @@ export default {
             if(res.data.code == 200){
                 let data = res.data.data
                 let legData = ['注册人数']
-                this.getesPrice(xData,data,'esPrice',legData)
+                this.getesPrice(xData,data.slice(0,month),'esPrice',legData)
             }
         })
     },
@@ -67,7 +70,7 @@ export default {
                         }
                         // this.gettotalRevenue(xData,data)
                          let legData = ['充值收入']
-                         this.getesPrice(xData,data[1],'totalRevenue',legData)
+                         this.getesPrice(xData,data[1].slice(0,month),'totalRevenue',legData)
                     }
                 })
             }

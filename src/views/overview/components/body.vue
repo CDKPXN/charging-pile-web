@@ -22,7 +22,10 @@
 <script>
     import echarts from '../../../../static/js/echarts.min.js'
     import axios from 'axios'
-    import url from '../../../config/url.js'
+    import url from '../../../config/url.js';
+    let date =new Date();
+    let month=date.getMonth()+1;
+    console.log('month',month)
     export default {
         name: 'OverviewBody',
         data () {
@@ -44,7 +47,7 @@
                     headers:{'token':sessionStorage.getItem('token')}
                 })
                 .then(res=>{
-                    var data = res.data.data.statisticsForYear
+                    var data = res.data.data.statisticsForYear.slice(0,month)
                     data.forEach((value,index,item) => {
                         data[index] = (parseFloat(value.income) / 100).toFixed(2)
                     })

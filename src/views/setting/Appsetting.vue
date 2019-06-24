@@ -2,6 +2,9 @@
     <div style="overflow: hidden;width:60%">
          <div style="float:left">
              <span class="demonstration">第一张图</span>
+               <div slot="tip" style="display:flex;margin:10px 0;">
+                <el-input v-model="input1" placeholder="https://www.xxx.com/"  size="small" ></el-input>          
+                </div>  
              <el-image :src="src1" class="apppicture1" ></el-image>
              <!-- 上传组件 -->
              <el-upload
@@ -12,14 +15,18 @@
                 :limit="1"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"   
-                >
-                <el-button size="small" type="primary">点击上传</el-button>
+                >                        
+                <el-button size="small" type="primary">点击上传</el-button>                
                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2MB</div>
               </el-upload>
+                    
         </div>
             
          <div style="float:right"  >
              <span class="demonstration">第二张图</span>
+              <div slot="tip" style="display:flex;margin:10px 0;">
+                <el-input v-model="input2" placeholder="https://www.xxx.com/"  size="small" ></el-input>          
+                </div>  
              <el-image :src="src2" class="apppicture1" ></el-image>
              
               <el-upload
@@ -48,10 +55,24 @@ export default {
            src1: '',
            src2: '',
            token:{token:sessionStorage.getItem('token')},
-           action_1:url.localSrc+'/file/record/1',
-           action_2:url.localSrc+'/file/record/2',
+           action_1:url.localSrc+'/file/record?id=1',
+           action_2:url.localSrc+'/file/record?id=2',
+           input1:'',
+           input2:''
        }
    },
+  //  watch:{
+  //    input1(val){
+  //       this.action_1=url.localSrc+'/file/record?id=1&href='+val;
+  //    },
+  //    input2(val){
+  //       this.action_2=url.localSrc+'/file/record?id=2&href='+val;
+  //    },
+  //  },
+  updated(){
+     this.action_1=url.localSrc+'/file/record?id=1&href='+this.input1
+     this.action_2=url.localSrc+'/file/record?id=2&href='+this.input2
+  },
    created(){
       let vm=this;
       vm.$ajax({
@@ -60,8 +81,8 @@ export default {
               headers:{'token':sessionStorage.getItem('token')},
                }).then(res=>{
                     if(res.data.code==200){
-                      this.src1=url.localSrc+'/'+res.data.data[0].name;
-                      this.src2=url.localSrc+'/'+res.data.data[1].name;
+                      this.src1=url.localSrc+'/'+res.data.data[0].rname;
+                      this.src2=url.localSrc+'/'+res.data.data[1].rname;
                     }
                 })
    },
