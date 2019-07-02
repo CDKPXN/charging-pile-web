@@ -13,13 +13,27 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="详细地址" :label-width="formLabelWidth">
+              <el-col :span="12">
+                <el-form-item label="省/市/区" :label-width="formLabelWidth">
+                  <div class="block">
+                     <el-cascader
+                    :options="options"
+                    v-model="selectedOptions"
+                    @change="handleChange"
+                    :separator="'/'"
+                    style="width:260px"
+                    id='bigaddr'
+                    >
+                    </el-cascader>
+                </div>
+                </el-form-item>
+              </el-col>
+               <el-col :span="12">
+                <el-form-item label="详细街道" :label-width="formLabelWidth">
                   <input
                     type="text"
                     placeholder="填写详细地址,如：四川省成都市xxx街道"
                     name="address"
-                    style="width:98.8%;"
                     class="form-control addStyle el-input__inner"
                   >
                 </el-form-item>
@@ -149,6 +163,10 @@
 <script>
 // import {api_addSite} from '../api/index.js'
 // import $ from 'jquery'
+let province='';
+let city='';
+let district='';
+import options from '../../config/country-data.js'
 import url from '../../config/url.js'
 export default {
   data() {
@@ -175,13 +193,21 @@ export default {
       src:url.localSrc+'/no_img.jpg',
       action:url.localSrc+'/file/record/upload',
       token:{token:sessionStorage.getItem('token')},
-      fid:''
+      fid:'',
+      selectedOptions: [],//存放默认值
+      options:options,   //存放城市数据,
     };
   },
   mounted: function() {
     this.init();
   },
   methods: {
+     handleChange(value) {
+        console.log('bbbb',value);
+        province=value[0];
+        city=value[1];
+        district=value[2]
+      },
       //上传成功变图片
       handleAvatarSuccess(res, file) {  
         this.fid=res.data.id;     
@@ -201,6 +227,7 @@ export default {
        },
     //初始化地图
     init: function() {
+      
       var map = new AMap.Map("container", {
         center: ["104.069919", "30.564255"],
         resizeEnable: true,
@@ -237,7 +264,7 @@ export default {
       });
       //标记点松开后的经纬度
       AMap.event.addListener(marker, "dragging", function(e) {
-        $("input[name=address]").val("检索地址中......");
+        // $("input[name=address]").val("检索地址中......");
         $("input[name=lng]").val(marker.getPosition().lng);
         $("input[name=lat]").val(marker.getPosition().lat);
       });
@@ -254,13 +281,22 @@ export default {
             extensions: "all"
           });
           map.addControl(Geocoder);
+         
           Geocoder.getAddress(lnglatXY, function(status, result) {
             if (status === "complete" && result.info === "OK") {
-              var address = result.regeocode.formattedAddress; //返回地址描述
-              $("input[name=address]").val(address);
+              // var address = result.regeocode.formattedAddress; //返回地址描述  
+              // console.log(result.regeocode.addressComponent)
+              let address=result.regeocode.addressComponent.province+result.regeocode.addressComponent.city+result.regeocode.addressComponent.district;
+                province=result.regeocode.addressComponent.province;
+                city=result.regeocode.addressComponent.city
+                district=result.regeocode.addressComponent.district   
+              $("input[name=address]").val(result.regeocode.addressComponent.township+result.regeocode.addressComponent.street+result.regeocode.addressComponent.streetNumber);
+              $('#bigaddr .el-input__inner').val(address);
             }
           });
+          
         });
+          
       });
       //实时路况图层
       var trafficLayer = new AMap.TileLayer.Traffic({
@@ -310,19 +346,20 @@ export default {
     addSite() {
       let vm = this;
       var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      let Addr = $("input[name=address]").val();
+      // let Addr = $("input[name=address]").val();
       let long = $("input[name=lng]").val();
       let lati = $("input[name=lat]").val();
-      vm.select.province = Addr.substr(0, 3);
-      vm.select.city = Addr.substr(3, 3);
-      let areaValue = Addr.substr(9, 1);
-      if (areaValue == "区" || areaValue == "县" || areaValue == "市") {
-        vm.select.area = Addr.substr(6, 4);
-      } else {
-        vm.select.area = Addr.substr(6, 3);
-      }
+      // vm.select.province = Addr.substr(0, 3);
+      // vm.select.city = Addr.substr(3, 3);
+      // let areaValue = Addr.substr(9, 1);
+      // if (areaValue == "区" || areaValue == "县" || areaValue == "市") {
+      //   vm.select.area = Addr.substr(6, 4);
+      // } else {
+      //   vm.select.area = Addr.substr(6, 3);
+      // }
+     
       if (vm.$route.query.titlemsg == 0) {
-        if(vm.form.name == "" ||Addr == "" || long == "" || lati == "" ||vm.form.linkmanPhone == ""){
+        if(vm.form.name == "" || long == "" || lati == "" ||vm.form.linkmanPhone == ""||vm.addr==''){
            vm.$message({
             type: "warning",
             message: "请完善信息"
@@ -337,10 +374,10 @@ export default {
         } else {
           // 发起添加站点的请求
           let params = {
-            province: vm.select.province,
-            city: vm.select.city,
-            district: vm.select.area,
-            addr: $("input[name=address]").val(),
+            province:province,
+            city:city,
+            district:district,
+            addr:$("input[name=address]").val(),
             name: vm.form.name,
             linkmanPhone: vm.form.linkmanPhone,
             longitude: $("input[name=lng]").val(),
@@ -377,9 +414,9 @@ export default {
             headers: { token: sessionStorage.getItem("token") },
             data: {
               id: vm.form.id,
-              province: vm.select.province,
-              city: vm.select.city,
-              district: vm.select.area,
+              province:province,
+              city:city,
+              district:district,
               addr: $("input[name=address]").val(),
               name: vm.form.name,
               longitude: $("input[name=lng]").val(),
@@ -414,18 +451,9 @@ export default {
         path: "/rate",
         query: { siteId: siteId }
       });
-    }
-  },
-  created() {
-    let siteid = this.$route.query.sitedate;
-   
-    if (siteid == 0) {
-      this.form = this.form;
-
-      this.show = false;
-    } else {
-      this.show = true;
-      this.$ajax({
+    },
+    initdata(siteid){
+        this.$ajax({
         method: "get",
         url: "/api/site/list?&id=" + siteid,
         headers: { token: sessionStorage.getItem("token") }
@@ -433,6 +461,10 @@ export default {
         if (res.data.code == 200) {
           this.form = res.data.data.list[0];
           this.fid=res.data.data.list[0].fid;
+          let temp=[]
+          temp.push(res.data.data.list[0].province,res.data.data.list[0].city,res.data.data.list[0].district)
+          this.selectedOptions=temp;
+          // console.log('xxxx',this.selectedOptions)
           this.form.eprice = (this.form.eprice / 100).toFixed(2);
           this.form.sprice = (this.form.sprice / 100).toFixed(2);
           this.form.parkingFee = (this.form.parkingFee / 100).toFixed(2);
@@ -464,6 +496,18 @@ export default {
           }
         }
       });
+      }
+  },
+  created() {
+    //  this.selectedOptions.push("天津市", "市辖区", "河西区")
+    let siteid = this.$route.query.sitedate;
+    if (siteid == 0) {
+      this.form = this.form;
+
+      this.show = false;
+    } else {
+      this.show = true; 
+      this.initdata(siteid);
     }
     if (this.$route.query.titlemsg == 0) {
       this.titleMsg = "新增站点";

@@ -2,23 +2,23 @@
     <div style="margin-top:30px;">
         <!-- 查询 -->
         <el-row class="search">
-            <el-col :span="4" class="colStyle">
+            <el-col :xs="4" :sm="6" :md="1" :lg="5" :xl="4" class="colStyle">
                 <el-input placeholder="用户名称" v-model="name" class="inputStyle" @change="restore" clearable></el-input> 
             </el-col>
-            <el-col :span="4" class="colStyle">
+            <el-col :xs="4" :sm="6" :md="1" :lg="5" :xl="4" class="colStyle">
                 <el-input placeholder="手机号码" v-model="phone" class="inputStyle" @change="RestorePhone" clearable></el-input> 
             </el-col>
-            <el-col :span="4" class="colStyle">
+            <el-col :xs="4" :sm="6" :md="1" :lg="5" :xl="4" class="colStyle">
                 <el-input placeholder="集团名称" v-model="bname" class="inputStyle" @change="RestoreBname" clearable></el-input> 
             </el-col>
-            <el-col :span="4" class="colStyle">
+            <el-col :xs="4" :sm="6" :md="1" :lg="5" :xl="4" class="colStyle">
                 <el-select placeholder="用户状态" v-model="status" class="inputStyle" @change="RestoreStatus" clearable>
                     <el-option label="正常" value="0"></el-option>
                     <el-option label="锁定" value="1"></el-option>
                     <el-option label="删除" value="2"></el-option>
                 </el-select> 
             </el-col>
-            <el-col :span="5">
+            <el-col :xs="4" :sm="6" :md="2" :lg="4" :xl="8">
                 <el-button type="primary" class="query"  @click="query">查询</el-button>
                  <el-button class="add" type="primary" style="margin-left:10%" icon="document" @click="handleDownload" :loading="downloadLoading">导出报表</el-button>
             </el-col>
@@ -50,10 +50,10 @@
             </el-table-column>
             <el-table-column label="操作" v-if="auth.isAdmin()" >
                 <template slot-scope="scope">
-                    <el-row :gutter="1">
-                       <el-col :xs="4" :sm="6" :md="8" :lg="8" :xl="8"> <el-button size="mini"  type="primary"  @click="handleCharge(scope.$index, scope.row.id)">充值</el-button></el-col>
-                      <el-col :xs="4" :sm="6" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  @click="handleEdit(scope.$index, scope.row.id)">编辑</el-button></el-col>
-                      <el-col :xs="4" :sm="6" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  @click="handleClick(scope.row,scope.$index)">退款</el-button></el-col>
+                    <el-row :gutter="10"  class="buttton-row">
+                       <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"> <el-button size="mini"  type="primary"  class="userListbutton"  style="font-size:0.2rem;" @click="handleCharge(scope.$index, scope.row.id)">充值</el-button></el-col>
+                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton" style="font-size:0.2rem;" @click="handleEdit(scope.$index, scope.row.id)">编辑</el-button></el-col>
+                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton" style="font-size:0.2rem;" @click="handleClick(scope.row,scope.$index)">退款</el-button></el-col>
                    
                    </el-row>
                    
@@ -549,4 +549,12 @@
 .userListtable th{
     padding: 8px 0px !important;
 }
+.userListbutton{
+    padding: 12% 20% !important;
+}
+.buttton-row>.el-col{
+    width: 28%;
+    padding: 0 1% !important;
+}
+
 </style>

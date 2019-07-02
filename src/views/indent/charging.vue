@@ -333,7 +333,7 @@ export default {
                     require.ensure([], () => {
                         const { export_json_to_excel } = require('../../vendor/Export2Excel.js');
                         const tHeader = ['用户名称','手机号码', '电站名称','电桩编号','充电消费','电费','服务费','停车费','充值扣除电费','充值扣除服务费','充值扣除停车费','充值扣除总费用','持续充电时间','结束时间','充电电量','充电状态'];
-                        const filterVal = ['username','phone', 'sitename','qr_code','cost','cprice','sprice','parking_fee','cz_cprice','cz_sprice','cz_pprice','cz','duration','begin_time','electric_quantity','status'];
+                        const filterVal = ['username','phone', 'sitename','qr_code','cost','cprice','sprice','parking_fee','cz_cprice','cz_sprice','cz_pprice','cz','duration','end_time','electric_quantity','status'];
                         const list = this.dataList;
                         const data = this.formatJson(filterVal, list);
                         export_json_to_excel(tHeader, data, '充电订单列表');

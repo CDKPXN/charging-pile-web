@@ -1,15 +1,17 @@
   <!-- 统计首页 -->
 <template>
   <div>
+    <!-- 第一行 -->
     <!-- 标题 -->
     <el-row>
       <el-col :span="8" class="title">
         <span><i class="fa fa-bar-chart" aria-hidden="true"></i>数据统计</span>
       </el-col>
     </el-row>
+    <!-- 第二行 -->
     <!-- 查询条件 -->
     <el-row class="selectWhere">
-      <el-col :span="9" class="fastLook">
+      <el-col  :xs="24" :sm="24" :md="24" :lg="24" :xl="24"  class="fastLook">
         <span>快速查看：</span>
         <el-button type="infor" @click="Today" id="Today" class="btn">今天</el-button>
         <el-button type="infor" @click="yesTerday(1,'#yesTerday')" id="yesTerday" class="btn">昨天</el-button>
@@ -20,17 +22,29 @@
       
     </el-row>
     
-      <div  style="display:flex;align-items: center;margin:10px 0;padding-left:30px;height:50px;"  >
+      <!-- <div  style="display:flex;align-items: center;margin:10px 0;padding-left:30px;height:50px;"  > -->
+  
+    <!-- 第三行-->
+    <el-row class="selectWhere">      
      <!-- 模糊用户搜索 -->
+     <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3" >
+         <div>
+            
       <el-select v-model="userid" filterable placeholder="请输入搜索用户" style="margin-right:40px" @change="filter" clearable v-if="auth.isAdmin()">
      <el-option
       v-for="item in dataList2" 
       :key="item.id"
       :label="item.name"
       :value="item.id">
+
+      
     </el-option>
      </el-select>
+     </div>
+    </el-col>
+     <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3" > 
      <!-- 模糊搜索站点 -->
+     <div> 
     <el-select v-model="zdid" filterable placeholder="请输入搜索站点"  style="margin-right:40px" @change="filter2" clearable>
      <el-option
       v-for="item in dataList" 
@@ -39,9 +53,12 @@
       :value="item.id">
     </el-option>
      </el-select>
+     </div>
+    </el-col>
        <!-- 日期搜索框 -->
-       <el-col :span="14">
-        <span class="fast">筛选时间：</span>
+     <el-col  :xs="18" :sm="18" :md="18" :lg="18" :xl="18" > 
+         <div>
+         <span class="fast">筛选时间：</span>
         <el-date-picker
             v-model="beginEndTime"
             type="datetimerange"
@@ -54,15 +71,18 @@
         </el-date-picker>
         <el-button type="primary" class="btnStyle" @click="query('','')">查询</el-button>
         <el-button type="infor" @click="reset">重置</el-button>
-      </el-col>
-      </div>
-   
+         </div>
+       </el-col> 
+      <!-- </div> -->
+    </el-row>
+
+     <!-- 第四行 -->
     <!-- 查询结果显示 -->
-    <el-row class="baseNot">
-        <el-col :span="16">
+    <el-row class="baseNot"  type="flex" justify="space-between" >
+        <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20" >
             <!-- 电站信息 -->
             <el-row>
-                <el-col :span="18" class="totalSite">
+                <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="18" class="totalSite">
                     <div>
                         <span>总电站数<br/><span class="siteNum">{{sites}}</span></span>
                     </div>
@@ -70,14 +90,14 @@
                         <span>总电桩数<br/><span class="siteNum">{{piles}}</span></span>
                     </div>
                 </el-col>
-                <el-col :span="6" class="totalSite siteNot">
+                <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="6" class="totalSite siteNot">
                     <img src="../../../static/img/siteList.png" style="height:20px;width:20px;position:relative;top:5.5%" alt="">
                     <span>&nbsp;&nbsp;电站信息</span>
                 </el-col>
             </el-row>
             <!-- 订单信息 -->
             <el-row>
-                <el-col :span="18" class="totalSite">
+                <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="18" class="totalSite">
                     <div>
                         <span>总订单数<br/><span class="indentNum">{{sitesstatistics.orderSize+sitesstatistics.rechargeOrderSize}}</span></span>
                     </div>
@@ -88,14 +108,14 @@
                         <span>充值订单数<br/><span class="indentNum">{{sitesstatistics.rechargeOrderSize}}</span></span>
                     </div>
                 </el-col>
-                <el-col :span="6" class="totalSite indentNot">
+                <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="6" class="totalSite indentNot">
                     <img src="../../../static/img/chargList.png" style="height:20px;width:20px;position:relative;top:5.5%" alt="">
                     <span>&nbsp;&nbsp;订单信息</span>
                 </el-col>
             </el-row>
             <!-- 充电信息 -->
             <el-row>
-                <el-col :span="18" class="totalSite">
+                <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="18" class="totalSite">
                     <div>
                         <span>充电电量<br/><span class="changeNum">{{sitesstatistics.electricQuantity}}（度）</span></span>
                     </div>
@@ -109,14 +129,14 @@
                         <span>充电次数<br/><span class="changeNum">900</span></span>
                     </div> -->
                 </el-col>
-                <el-col :span="6" class="totalSite chargNot">
+                <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="6" class="totalSite chargNot">
                     <img src="../../../static/img/chargE.png" style="height:20px;position:relative;top:5.5%" alt="">
                     <span>&nbsp;&nbsp;充电信息</span>
                 </el-col>
             </el-row>
             <!-- 用户信息 -->
             <el-row>
-                <el-col :span="18" class="totalSite" style="border-bottom: 1px solid rgb(207, 207, 207);">
+                <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="18" class="totalSite" style="border-bottom: 1px solid rgb(207, 207, 207);">
                     <div>
                         <span>集团用户数<br/><span class="userNum">{{userInfo.bloc}}</span></span>
                     </div>
@@ -127,21 +147,21 @@
                         <span>业主数<br/><span class="userNum">{{userInfo.admin}}</span></span>
                     </div>
                 </el-col>
-                <el-col :span="6" class="userNot">
+                <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="6" class="userNot">
                     <img src="../../../static/img/t_user.png" style="height:20px;width:20px;position:relative;top:5.5%" alt="">
                     <span>&nbsp;&nbsp;用户信息</span>
                 </el-col>
             </el-row>
         </el-col>
         <!-- 收入信息 -->
-        <el-col :span="4" class="income">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4" class="income">
             <el-row class="incomeText">
                 <el-col :span="24">
                     <img src="../../../static/img/t_money.png" style="height:20px;width:20px;" alt="">
                     <p style="display: inline-block;">&nbsp;&nbsp;收入情况</p><br>
                     <p class="incomeNum">¥&nbsp;{{sitesstatistics.income_count}}</p>
                 </el-col>
-            </el-row>
+            </el-row>     
         </el-col>
     </el-row>
     <!-- 图表统计 -->
@@ -151,8 +171,8 @@
         </el-col>
     </el-row>
     <!-- 根据所选用户和电站查数据 -->
-   <div  style="margin:30px 30px 0px 30px" >
-             <!-- 模糊用户搜索 -->
+   <!-- <div  style="margin:30px 30px 0px 30px" >
+            
                   <el-select v-model="userid" filterable placeholder="请输入搜索用户" style="margin-right:40px" @change="getaid" clearable v-if="auth.isAdmin()">
                    <el-option
                     v-for="item in dataList2" 
@@ -161,7 +181,7 @@
                     :value="item.id">
                     </el-option>
             </el-select>
-     <!-- 模糊搜索站点 -->
+    
                   <el-select v-model="zdid" filterable placeholder="请输入搜索站点"  style="margin-right:40px" @change="getsid" clearable>
                     <el-option
                     v-for="item in dataList" 
@@ -171,13 +191,13 @@
                      </el-option>
                          </el-select>
            <el-button type="primary" class="btnStyle" @click="lookfor">查询</el-button>              
-    </div>
+    </div> -->
     <!-- 图表统计2 -->
-    <el-row>
+    <!-- <el-row>
         <el-col :span="20" class="TabStyle">
             <chartList2 ref="chidren2"></chartList2>
         </el-col>
-    </el-row>
+    </el-row> -->
     <!-- 电站列表 -->
     <el-row class="TableStyle">
         <el-col :span="20">
@@ -185,17 +205,19 @@
         </el-col>
     </el-row>
     <!-- 故障/用户构成 -->
-    <el-row>
-      <el-col :span="20" class="groupStyle">
-            <div class="groupECharts">
+    <el-row style="margin:20px 0 0 30px;width:81.7%" type="flex" justify="space-between">
+      <el-col :span="12" style="padding-right:6px;">
+            <el-card shadow="always" class="cardTopBorder" style="background-color:rgb(235, 235, 235);box-shadow: 0 0 10px 1px grey;text-align: center;">
                 <p style="padding-left:15px">故障详情构成</p>
-                <div id="chargForm" style="height:300px;width:450px;"></div>
-            </div>
-            <div class="groupECharts" style="margin-left:10%;">
-                <p>用户构成</p>
-                <div id="userForm" style="height:300px;width:350px;"></div>
-            </div>      
+                <div id="chargForm" style="height:300px;width:450px;margin:0 auto;"></div>
+           </el-card>
       </el-col>
+      <el-col :span="12" style="padding-left:6px;" >
+           <el-card shadow="always" class="cardTopBorder" style="background-color:rgb(235, 235, 235);box-shadow: 0 0 10px 1px grey;text-align: center;">
+                <p>用户构成</p>
+                <div id="userForm" style="height:300px;width:350px;margin:0 auto;"></div>
+           </el-card>    
+      </el-col>    
     </el-row>
   </div>
 </template>
@@ -213,6 +235,8 @@ import SiteList from './components/siteList.vue'
 import ChartList from './components/chartList.vue'
 //第二个图表
 import ChartList2 from './components/chartList2.vue'
+let date=new Date();
+let month=date.getMonth()+1;
     export default {
         components:{
             SiteList,
@@ -232,8 +256,8 @@ import ChartList2 from './components/chartList2.vue'
                 dataList:[],
                 dataList2:[],
                 userid:null,
-                aid:'',
-                sid:''
+                // aid:'',
+                // sid:''
 
             }
         },
@@ -356,49 +380,49 @@ import ChartList2 from './components/chartList2.vue'
 
             },
             //模糊搜索站点
-            filtersmethod(){
-             this.$ajax({
-                method:'get',
-                url:'/api/site/list',
-                headers:{'token':sessionStorage.getItem('token')}
-            }).then(res => {
-                if(res.data.code == 200){
-                    this.dataList=res.data.data.list 
+        //     filtersmethod(){
+        //      this.$ajax({
+        //         method:'get',
+        //         url:'/api/site/list',
+        //         headers:{'token':sessionStorage.getItem('token')}
+        //     }).then(res => {
+        //         if(res.data.code == 200){
+        //             this.dataList=res.data.data.list 
                      
-                }
-            })
-        },
+        //         }
+        //     })
+        // },
              //模糊搜索用户
-            filtersmethoduser(){
-             this.$ajax({
-                method:'get',
-                url:'/api/admin/list',
-                headers:{'token':sessionStorage.getItem('token')}
-            }).then(res => {
-                if(res.data.code == 200){
-                    this.dataList2=res.data.data.list
+        //     filtersmethoduser(){
+        //      this.$ajax({
+        //         method:'get',
+        //         url:'/api/admin/list',
+        //         headers:{'token':sessionStorage.getItem('token')}
+        //     }).then(res => {
+        //         if(res.data.code == 200){
+        //             this.dataList2=res.data.data.list
                   
-                }
-            })
-        },
+        //         }
+        //     })
+        // },
         //点击查询事件把调用子组件的方法传值
         lookfor(){
-            this.$refs.chidren2.getaidsid(this.aid,this.sid,false);
+            // this.$refs.chidren2.getaidsid(this.aid,this.sid,false);
             //点击的时候调用子组件的方法重新请求数据
-            this.$refs.chidren2.orderincome();
-            this.$refs.chidren2.powerOutPut();
-            this.$refs.chidren2.totalTime();
-            this.$refs.chidren2.totalOrder();
-            this.$refs.chidren2.totalFault();
+            // this.$refs.chidren2.orderincome();
+            // this.$refs.chidren2.powerOutPut();
+            // this.$refs.chidren2.totalTime();
+            // this.$refs.chidren2.totalOrder();
+            // this.$refs.chidren2.totalFault();
         },
         //获取到用户的id
-        getaid(val){
-        this.aid=val;
-        },
+        // getaid(val){
+        // this.aid=val;
+        // },
         //获取到电站id
-        getsid(val){
-        this.sid=val;
-        },
+        // getsid(val){
+        // this.sid=val;
+        // },
         filter(val){
             let vm=this;
             vm.$ajax({
@@ -580,8 +604,8 @@ import ChartList2 from './components/chartList2.vue'
         },
         created(){
 
-            this.filtersmethod();
-            this.filtersmethoduser();
+            // this.filtersmethod();
+            // this.filtersmethoduser();
             $(document).ready(function(){
                 $("#Today").css({
                     "background-color": "#409EFF",
