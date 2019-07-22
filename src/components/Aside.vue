@@ -14,9 +14,10 @@
         <i class="fa fa-home fa-lg" style="width:26px"></i>&nbsp; 
         <span slot="title" class="sidebarTitle">总览</span>
     </el-menu-item>
-    <el-submenu v-for="(tmp,index) in navBar" :key="index"  :index="tmp.index">
+    <el-submenu v-for="(tmp,index) in navBar" :key="index"  :index="tmp.index" > 
         <template slot="title" >
             <i :class="tmp.icon" style="width:26px"></i>&nbsp; 
+            
             <span slot="title">{{tmp.name}}</span>
         </template>
         <el-menu-item-group v-for="(item,index) in tmp.children" :key="index" >
@@ -49,7 +50,6 @@
 </template>
 <script>
 import sidebar from './nav.js'
-
 export default {
     props:['defActive'],
     name:'ElMenuAside',
@@ -77,7 +77,7 @@ export default {
     created(){
         console.log("边导航:",sidebar.nav)
         let user = localStorage.getItem('user')
-        console.log(user)
+        console.log('当前用户身份',user)
         if(user !== "admin"){
             this.isAdmin = false;
             let newArray= [];
@@ -117,7 +117,7 @@ export default {
                     })
                     value.children = childrenArr
                     arr.push(value)
-                    console.log("arr2222",arr)
+                    
                 }
             }
             );
@@ -131,6 +131,7 @@ export default {
         }
         
         this.navBar=sidebar.nav
+        console.log('ddd',sidebar.nav)
     }
 }
 </script>

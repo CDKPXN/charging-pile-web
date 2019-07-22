@@ -380,31 +380,31 @@ let month=date.getMonth()+1;
 
             },
             //模糊搜索站点
-        //     filtersmethod(){
-        //      this.$ajax({
-        //         method:'get',
-        //         url:'/api/site/list',
-        //         headers:{'token':sessionStorage.getItem('token')}
-        //     }).then(res => {
-        //         if(res.data.code == 200){
-        //             this.dataList=res.data.data.list 
+            filtersmethod(){
+             this.$ajax({
+                method:'get',
+                url:'/api/site/list',
+                headers:{'token':sessionStorage.getItem('token')}
+            }).then(res => {
+                if(res.data.code == 200){
+                    this.dataList=res.data.data.list 
                      
-        //         }
-        //     })
-        // },
+                }
+            })
+        },
              //模糊搜索用户
-        //     filtersmethoduser(){
-        //      this.$ajax({
-        //         method:'get',
-        //         url:'/api/admin/list',
-        //         headers:{'token':sessionStorage.getItem('token')}
-        //     }).then(res => {
-        //         if(res.data.code == 200){
-        //             this.dataList2=res.data.data.list
+            filtersmethoduser(){
+             this.$ajax({
+                method:'get',
+                url:'/api/admin/list',
+                headers:{'token':sessionStorage.getItem('token')}
+            }).then(res => {
+                if(res.data.code == 200){
+                    this.dataList2=res.data.data.list
                   
-        //         }
-        //     })
-        // },
+                }
+            })
+        },
         //点击查询事件把调用子组件的方法传值
         lookfor(){
             // this.$refs.chidren2.getaidsid(this.aid,this.sid,false);
@@ -604,8 +604,8 @@ let month=date.getMonth()+1;
         },
         created(){
 
-            // this.filtersmethod();
-            // this.filtersmethoduser();
+            this.filtersmethod();
+            this.filtersmethoduser();
             $(document).ready(function(){
                 $("#Today").css({
                     "background-color": "#409EFF",

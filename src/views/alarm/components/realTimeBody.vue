@@ -57,18 +57,18 @@
                 let id = row.id
                 let status = row.status
                 this.$router.push({path:"./detailAlarm",query:{id:id,status:status}})
-                if(row.status==0){
-                    vm.$ajax({
-                        method:'put',
-                        url:'/api/fault/'+id,
-                        headers:{'token':sessionStorage.getItem('token')},
-                        data:{
-                            id:id
-                        }
-                    }).then(res=>{
-                       console.log(res)
-                    })
-                }             
+                // if(row.status==0){
+                //     vm.$ajax({
+                //         method:'put',
+                //         url:'/api/fault/'+id,
+                //         headers:{'token':sessionStorage.getItem('token')},
+                //         data:{
+                //             id:id
+                //         }
+                //     }).then(res=>{
+                //        console.log(res)
+                //     })
+                // }             
             }
         }
     }

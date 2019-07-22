@@ -24,6 +24,8 @@ import echartsCom from '@/views/overview/echartsCom'
 //用户
 import evaluate from '@/views/administration/evaluate'
 import management from '@/views/administration/management'
+import shuakaUser from '@/views/administration/shuakaUser'
+import shuakaChildren from '@/views/administration/components/shuakaChildren'
 import ownerDetail from '@/views/administration/components/ownerDetail'
 import registered from '@/views/administration/components/registered'
 import costList from '@/views/administration/components/costList'
@@ -155,6 +157,16 @@ var router = new Router({
           path: '/management',
           name: '业主用户',
           component: management
+        },
+        {
+          path: '/shuakaUser',
+          name: '刷卡用户',
+          component: shuakaUser
+        },
+        {
+          path: '/shuakaChildren',
+          name: '刷卡子用户',
+          component: shuakaChildren
         },
         {
           path: '/ownerDetail',

@@ -108,13 +108,13 @@
                 })
                 .then(res=>{
                     var dataAmount = res.data.data.statisticsAmountForWeek
-                    console.log(dataAmount)
                     var dataAmountFormat = [];
                     dataAmount.forEach((value,index,item) => {
-                        var flag = index;
-                        if(index == 6) flag = -1;
-                        console.log(flag+1)
-                        dataAmountFormat[flag+1] = (parseFloat(value) / 100).toFixed(2)
+                        // var flag = index;
+                        // if(index == 6) flag = -1;
+                        // console.log(flag+1)
+                        dataAmountFormat[index] = (parseFloat(value) / 100).toFixed(2)
+                       
                     })
                     var dataPayFor = res.data.data.statisticsPayForWeek
                     var dataPayForFormat = [];
@@ -157,7 +157,7 @@
                             axisTick: {
                                 alignWithLabel: true
                             },
-                            data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                            data: [ '周一', '周二', '周三', '周四', '周五', '周六','周日'],
                             axisPointer: {
                                 type: 'shadow'
                             }

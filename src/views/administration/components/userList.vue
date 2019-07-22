@@ -24,7 +24,7 @@
             </el-col>
         </el-row>
         <!-- 表格 -->
-        <el-table :data="tableData" style="width: 100%" class="userListtable">
+        <el-table :data="tableData" style="width: 100%" class="userListtable"  >
             <el-table-column prop="name" label="用户名称"  >
             </el-table-column>
             <el-table-column prop="phone" label="手机号码">
@@ -39,7 +39,7 @@
             </el-table-column>
             <el-table-column prop="vehicle_type" label="用户绑定车辆">
             </el-table-column>
-            <el-table-column prop="ctime" label="创建日期" width="200px;">
+            <el-table-column prop="ctime" label="创建日期" >
             </el-table-column>
             <el-table-column label="用户状态" >
                 <template slot-scope="scope">
@@ -51,10 +51,9 @@
             <el-table-column label="操作" v-if="auth.isAdmin()" >
                 <template slot-scope="scope">
                     <el-row :gutter="10"  class="buttton-row">
-                       <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"> <el-button size="mini"  type="primary"  class="userListbutton"  style="font-size:0.2rem;" @click="handleCharge(scope.$index, scope.row.id)">充值</el-button></el-col>
-                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton" style="font-size:0.2rem;" @click="handleEdit(scope.$index, scope.row.id)">编辑</el-button></el-col>
-                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton" style="font-size:0.2rem;" @click="handleClick(scope.row,scope.$index)">退款</el-button></el-col>
-                   
+                       <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"> <el-button size="mini"  type="primary"  class="userListbutton"  @click="handleCharge(scope.$index, scope.row.id)">充值</el-button></el-col>
+                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton"  @click="handleEdit(scope.$index, scope.row.id)">编辑</el-button></el-col>
+                      <el-col :xs="4" :sm="8" :md="8" :lg="8" :xl="8"><el-button size="mini"  type="primary"  class="userListbutton"  @click="open(scope.row,scope.$index)">退款</el-button></el-col>        
                    </el-row>
                    
                     
@@ -131,6 +130,7 @@
                 <el-button type="primary" @click="subCharge">确 认</el-button>
             </div>
         </el-dialog>
+       
     </div>
 </template>
 
@@ -204,6 +204,7 @@
                 dataList:[],
                 downloadLoading:false,
                 dialogFormCharge:false,
+                dialogVisibletuikuan:true,
                 count:0,
                 uid:''
             }
@@ -222,6 +223,34 @@
             vm.query();
         },
         methods:{
+         open(row,index) {  //退款对话框
+        this.$confirm('此操作将退款, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+             let vm=this;
+              vm.$ajax({
+              method: "post",
+              url:"/api/bloc/user/refund",
+              headers: { token: sessionStorage.getItem("token") },
+              data:{phone:row.phone,refund:row.balance*100}
+              }).then(res => {
+             
+              if (res.data.code == 200) {
+              //把视图表格上的数据变为0
+              vm.tableData[index].balance=0;
+              this.$message({
+               message: '退款成功',
+               type: 'success',
+              });
+            }else{
+              this.$message.error('退款失败');
+           }
+          })
+        
+        })
+      },
             restore(){
                 if(this.name == ''){
                     this.query()
@@ -255,7 +284,7 @@
                 }).then(res => {
                    if(res.data.code == 200){
                        vm.tableData = res.data.data.list.slice(0,vm.page_size == 0?'10':vm.page_size)
-                    //    console.log(res.data.data.list)
+                    //    console.log('pppppp',res.data.data.list)
                        vm.tableData.map(item =>{
                             item.balance = (parseFloat(item.balance) / 100).toFixed(2)
                             item.hd_balance = (parseFloat(item.hd_balance) / 100).toFixed(2)
@@ -276,29 +305,7 @@
                 this.uid = row
                 this.count = 0
             },
-            //退款的回调
-             handleClick(row,index) {
-            
-             let vm=this;
-              vm.$ajax({
-              method: "post",
-              url:"/api/bloc/user/refund",
-              headers: { token: sessionStorage.getItem("token") },
-              data:{phone:row.phone,refund:row.balance*100}
-              }).then(res => {
-             
-              if (res.data.code == 200) {
-              //把视图表格上的数据变为0
-              vm.tableData[index].balance=0;
-              this.$message({
-               message: '退款成功',
-               type: 'success',
-              });
-            }else{
-              this.$message.error('退款失败');
-           }
-          })
-         },
+        
             // 充值金额验证
             Verification () {
                 let vm = this

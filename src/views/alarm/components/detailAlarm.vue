@@ -41,19 +41,20 @@ export default {
             let status = vm.$route.query.status
             vm.$ajax({
               method:'get',
-              url:'api/fault/list?page=1&size=1000'+id,
+              url:'api/fault/'+id,
               headers:{'token':sessionStorage.getItem('token')},
             })
             .then(res=>{
               if(res.data.code==200){
-                  let arr = res.data.data.list
-                  let arrNull = []
-                  for(var item of arr){
-                      if(item.id == id){
-                          arrNull.push(item)
-                          vm.userDetail = arrNull[0]
-                      }
-                  }
+                //   let arr = res.data.data.list
+                   vm.userDetail=res.data.data
+                //   let arrNull = []
+                //   for(var item of arr){
+                //       if(item.id == id){
+                //           arrNull.push(item)
+                //           vm.userDetail = arrNull[0]
+                //       }
+                //   }
               }
             })
         },

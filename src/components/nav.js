@@ -55,6 +55,11 @@ const nav = [
                 'name':'集团用户',
                 'path':'/evaluate',
                 
+            },
+            {
+                'name':'刷卡用户',
+                'path':'/shuakaUser',
+                
             }
         ]
     },{

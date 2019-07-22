@@ -39,13 +39,13 @@ export default {
       $('body').on('keydown mousemove mousedown', function(e) {
           time = maxTime; // reset
       });
-      // var intervalId = setInterval(function() {
-      //     time--;
-      //     if (time <= 0) {
-      //         vm.ShowInvalidLoginMessage();
-      //         clearInterval(intervalId);
-      //     }
-      // }, 1000)
+      var intervalId = setInterval(function() {
+          time--;
+          if (time <= 0) {
+              vm.ShowInvalidLoginMessage();
+              clearInterval(intervalId);
+          }
+      }, 1000)
     },
     ShowInvalidLoginMessage () {
         sessionStorage.removeItem('token')
