@@ -4,6 +4,8 @@
             <el-table :data="tableData"  style="margin-left:0.3%;">
                 <el-table-column prop="id" label="电桩序号">
                 </el-table-column>
+                 <el-table-column prop="num" label="电桩编码">
+                </el-table-column>
                 <el-table-column prop="name" label="电桩名称">
                 </el-table-column>
                 <el-table-column label="电桩类型">

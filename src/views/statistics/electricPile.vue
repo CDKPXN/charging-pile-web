@@ -159,7 +159,12 @@
                 <el-col :span="24">
                     <img src="../../../static/img/t_money.png" style="height:20px;width:20px;" alt="">
                     <p style="display: inline-block;">&nbsp;&nbsp;收入情况</p><br>
-                    <p class="incomeNum">¥&nbsp;{{sitesstatistics.income_count}}</p>
+                    <p >总收入¥&nbsp;{{sitesstatistics.income_count}}</p>
+                    <!-- <div style="width:100%;display:inline-block;margin-top: 10%;">
+                      <p  style="background-color:green;width:100%;margin:0px;">总收入¥&nbsp;{{sitesstatistics.income_count}}</p>
+                      <p  style="background-color:red;width:100%;margin:0px;">总收入¥&nbsp;{{sitesstatistics.income_count}}</p>
+                     <p  style="background-color:blue;width:100%;margin:0px;">总收入¥&nbsp;{{sitesstatistics.income_count}}</p> 
+                    </div>             -->
                 </el-col>
             </el-row>     
         </el-col>

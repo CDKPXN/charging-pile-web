@@ -109,7 +109,7 @@ export default {
   methods: {
   
     RestorePhone() {
-      if (this.phone !== "") {
+      if (this.phone == "") {
         this.query();
       }
     },

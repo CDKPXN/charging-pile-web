@@ -98,8 +98,8 @@ export default {
   },
   data() {
     return {
-      phone: null,
-      month: null,
+      phone: '',
+      month: '',
       downloadLoading: false,
       tableData: [],
       // 分页
@@ -127,7 +127,7 @@ export default {
       this.query();
     },
     RestorePhone() {
-      if (this.phone !== "") {
+      if (this.phone == "") {
         this.query();
       }
     },
@@ -234,7 +234,6 @@ export default {
       let vm = this;
       let month = "";
       let year = currentyear;
-      
       if (vm.month == null || vm.month == "") {
         if (currentdate < 28) {
           month = currentmonth - 1;
