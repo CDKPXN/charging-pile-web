@@ -34,7 +34,8 @@
                             <span v-if="scope.row.status==1">收到预约</span>
                             <span v-if="scope.row.status==2">预约中</span>
                             <span v-if="scope.row.status==3">充电中</span>
-                            <span v-if="scope.row.status==4">故障</span>
+                            <span v-if="scope.row.status==4&&scope.row.fid!=='Disconnection'">故障</span>
+                            <span v-if="scope.row.status==4&&scope.row.fid=='Disconnection'">离线</span>
                             <span v-if="scope.row.status==5">锁定</span>
                             <span v-if="scope.row.status==6">暂停</span>
                         </div>
